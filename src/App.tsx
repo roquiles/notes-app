@@ -1,5 +1,13 @@
-function App() {
-  return <div className="App"></div>;
-}
+import { Header } from "./components/Header";
+import { NotesList } from "./components/NotesList";
+import { GlobalStyle } from "./styles/global";
 
-export default App;
+export function App() {
+  return (
+    <div className="App">
+      <Header />
+      <NotesList />
+      <GlobalStyle />
+    </div>
+  );
+}

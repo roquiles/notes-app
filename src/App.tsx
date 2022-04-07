@@ -16,10 +16,14 @@ export function App() {
     setNotes([...notes, note]);
   }
 
+  function handlerDeleteNote(id: number) {
+    setNotes(notes.filter((note) => note.id !== id));
+  }
+
   return (
     <div className="App">
       <Header onCreateNewNote={handlerAddNewNote} />
-      <NotesList notes={notes} />
+      <NotesList notes={notes} onDeleteNote={handlerDeleteNote} />
       <GlobalStyle />
     </div>
   );

@@ -25,6 +25,10 @@ export const NoteItem = styled.li`
   padding: 1rem 2rem;
   justify-content: space-between;
 
+  & + li {
+    margin-top: 1rem;
+  }
+
   div {
     display: flex;
     flex-direction: row;

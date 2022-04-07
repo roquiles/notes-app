@@ -18,7 +18,7 @@ export const Container = styled.div`
   }
 `;
 
-export const NewNoteBox = styled.header`
+export const NewNoteBox = styled.div`
   width: 60%;
   display: flex;
   justify-content: flex-end;

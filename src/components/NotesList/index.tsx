@@ -10,9 +10,10 @@ interface Note {
 
 interface NotesListProps {
   notes: Note[];
+  onDeleteNote: (id: number) => void;
 }
 
-export function NotesList({ notes }: NotesListProps) {
+export function NotesList({ notes, onDeleteNote }: NotesListProps) {
   return (
     <Container>
       <ul>
@@ -24,7 +25,11 @@ export function NotesList({ notes }: NotesListProps) {
                 <button type="button" className="edit">
                   <img src={pencilImg} alt="edit" />
                 </button>
-                <button type="button" className="delete">
+                <button
+                  type="button"
+                  className="delete"
+                  onClick={() => onDeleteNote(note.id)}
+                >
                   <img src={trashImg} alt="delete" />
                 </button>
               </div>

@@ -1,6 +1,12 @@
-import { Container, NoteItem } from "./styles";
-import trashImg from "../../assets/trash.svg";
-import pencilImg from "../../assets/pencil.svg";
+import { Container, NoteItem, StyledEdiText } from "./styles";
+import {
+  FaPencilAlt,
+  FaTrashAlt,
+  FaTimes,
+  FaCheck,
+  FaCalendarAlt,
+} from "react-icons/fa";
+import { useNotes } from "../../hooks/NotesContext";
 
 interface Note {
   id: number;
@@ -8,31 +14,53 @@ interface Note {
   createdAt: Date;
 }
 
-interface NotesListProps {
-  notes: Note[];
-  onDeleteNote: (id: number) => void;
-}
+export function NotesList() {
+  const { notes, handlerDeleteNote, handlerUpdateNotes } = useNotes();
 
-export function NotesList({ notes, onDeleteNote }: NotesListProps) {
+  function handlerEditNote(value: any, note: Note) {
+    const currUpdatedNote = {
+      id: note.id,
+      content: value,
+      createdAt: new Date(),
+    };
+
+    handlerUpdateNotes(currUpdatedNote);
+  }
+
   return (
     <Container>
       <ul>
         {notes.map((note) => {
           return (
             <NoteItem key={note.id}>
-              <p>{note.content}</p>
               <div>
-                <button type="button" className="edit">
-                  <img src={pencilImg} alt="edit" />
-                </button>
-                <button
-                  type="button"
-                  className="delete"
-                  onClick={() => onDeleteNote(note.id)}
-                >
-                  <img src={trashImg} alt="delete" />
-                </button>
+                <StyledEdiText
+                  value={note.content}
+                  onSave={(value) => handlerEditNote(value, note)}
+                  editButtonClassName="edit"
+                  editButtonContent={<FaPencilAlt />}
+                  cancelButtonContent={<FaTimes />}
+                  cancelButtonClassName="cancel"
+                  saveButtonContent={<FaCheck />}
+                  saveButtonClassName="save"
+                  viewContainerClassName="view-container"
+                ></StyledEdiText>
+                <div>
+                  <button
+                    type="button"
+                    className="delete"
+                    onClick={() => handlerDeleteNote(note.id)}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </div>
               </div>
+              <p>
+                <FaCalendarAlt />{" "}
+                {`Created at: ${new Date(note.createdAt).getDate()}/${
+                  new Date(note.createdAt).getMonth() + 1
+                }/${new Date(note.createdAt).getFullYear()}`}
+              </p>
             </NoteItem>
           );
         })}

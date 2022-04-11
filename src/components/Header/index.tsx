@@ -1,27 +1,22 @@
 import { useState } from "react";
+import { useNotes } from "../../hooks/NotesContext";
 import { Container, NewNoteBox } from "./styles";
+import { FaPlus } from "react-icons/fa";
 
-interface Note {
-  id: number;
-  content: string;
-  createdAt: Date;
-}
-
-interface HeaderProps {
-  onCreateNewNote: (note: Note) => void;
-}
-
-export function Header(props: HeaderProps) {
+export function Header() {
   const [newNoteContent, setNewNoteContent] = useState("");
+  const { handlerAddNewNote } = useNotes();
 
-  function handleCreateNewNote(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  function handleCreateNewNote(e: React.MouseEvent<HTMLElement>) {
+    if (newNoteContent === "") return;
 
-    props.onCreateNewNote({
+    handlerAddNewNote({
       id: Math.random(),
       createdAt: new Date(),
       content: newNoteContent,
     });
+
+    setNewNoteContent("");
   }
 
   return (
@@ -34,9 +29,10 @@ export function Header(props: HeaderProps) {
           id="note"
           placeholder="Write your note"
           onChange={(e) => setNewNoteContent(e.target.value)}
+          value={newNoteContent}
         />
         <button onClick={handleCreateNewNote} type="submit">
-          Add note
+          <FaPlus />
         </button>
       </NewNoteBox>
     </Container>

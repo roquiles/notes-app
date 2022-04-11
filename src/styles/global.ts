@@ -5,9 +5,11 @@ export const GlobalStyle = createGlobalStyle`
         --header-bg: #FFC145;
         --list-bg: #f3f3f7;
         --text-color: #1f1f1f;
+        --date-color: #b8b8b8;
         --purple: #5B5F97;
         --light-purple: #A7BBEC;
         --red: #FF6B6C;
+        --green: #64A692;
     }
 
     * {

@@ -21,6 +21,7 @@ interface NotesContextData {
   handlerAddNewNote: (note: Note) => void;
   handlerDeleteNote: (id: number) => void;
   handlerUpdateNotes: (updatedNote: Note) => void;
+  isEmpty: boolean;
 }
 
 export const NotesContext = createContext<NotesContextData>(
@@ -29,6 +30,7 @@ export const NotesContext = createContext<NotesContextData>(
 
 export function NotesProvider({ children }: NotesProviderProps) {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   useEffect(() => {
     const notesArray = localStorage.getItem("notesList");
@@ -40,6 +42,7 @@ export function NotesProvider({ children }: NotesProviderProps) {
   function handlerAddNewNote(note: Note) {
     const newNotesArray = [...notes, note];
     setNotes(newNotesArray);
+    setIsEmpty(false);
 
     localStorage.setItem("notesList", JSON.stringify(newNotesArray));
   }
@@ -47,6 +50,12 @@ export function NotesProvider({ children }: NotesProviderProps) {
   function handlerDeleteNote(id: number) {
     const notesList = notes.filter((note) => note.id !== id);
     setNotes(notesList);
+
+    console.log(notesList);
+
+    if (notesList.length === 0) {
+      setIsEmpty(true);
+    }
 
     localStorage.setItem("notesList", JSON.stringify(notesList));
   }
@@ -72,6 +81,7 @@ export function NotesProvider({ children }: NotesProviderProps) {
         handlerAddNewNote,
         handlerDeleteNote,
         handlerUpdateNotes,
+        isEmpty,
       }}
     >
       {children}

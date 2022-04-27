@@ -15,7 +15,7 @@ interface Note {
 }
 
 export function NotesList() {
-  const { notes, handlerDeleteNote, handlerUpdateNotes } = useNotes();
+  const { notes, handlerDeleteNote, handlerUpdateNotes, isEmpty } = useNotes();
 
   function handlerEditNote(value: any, note: Note) {
     const currUpdatedNote = {
@@ -28,7 +28,7 @@ export function NotesList() {
   }
 
   return (
-    <Container>
+    <Container hidden={isEmpty}>
       <ul>
         {notes.map((note) => {
           return (

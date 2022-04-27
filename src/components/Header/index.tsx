@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNotes } from "../../hooks/NotesContext";
 import { Container, NewNoteBox } from "./styles";
 import { FaPlus } from "react-icons/fa";
@@ -7,7 +7,7 @@ export function Header() {
   const [newNoteContent, setNewNoteContent] = useState("");
   const { handlerAddNewNote } = useNotes();
 
-  function handleCreateNewNote(e: React.MouseEvent<HTMLElement>) {
+  function handleCreateNewNote() {
     if (newNoteContent === "") return;
 
     handlerAddNewNote({
@@ -17,6 +17,12 @@ export function Header() {
     });
 
     setNewNoteContent("");
+  }
+
+  function addNewNote(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.code === "Enter") {
+      handleCreateNewNote();
+    }
   }
 
   return (
@@ -29,6 +35,7 @@ export function Header() {
           id="note"
           placeholder="Write your note"
           onChange={(e) => setNewNoteContent(e.target.value)}
+          onKeyUp={(e) => addNewNote(e)}
           value={newNoteContent}
         />
         <button onClick={handleCreateNewNote} type="submit">

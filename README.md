@@ -2,6 +2,8 @@
 
 Idea from [here](https://github.com/florinpop17/app-ideas).
 
+Project running [here](https://make-a-note-rq.netlify.app/).
+
 ## Description
 
 Create and store your notes for a later purpose!

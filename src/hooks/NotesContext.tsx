@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 interface Note {
   id: number;
@@ -29,15 +23,21 @@ export const NotesContext = createContext<NotesContextData>(
 );
 
 export function NotesProvider({ children }: NotesProviderProps) {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [isEmpty, setIsEmpty] = useState(true);
-
-  useEffect(() => {
+  const [notes, setNotes] = useState<Note[]>(() => {
     const notesArray = localStorage.getItem("notesList");
-    if (notesArray !== null) {
-      setNotes(JSON.parse(notesArray));
+    if (notesArray) {
+      return JSON.parse(notesArray);
     }
-  }, []);
+
+    return [];
+  });
+  const [isEmpty, setIsEmpty] = useState(() => {
+    if (notes) {
+      return false;
+    } else {
+      return true;
+    }
+  });
 
   function handlerAddNewNote(note: Note) {
     const newNotesArray = [...notes, note];

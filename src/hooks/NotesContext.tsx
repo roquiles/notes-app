@@ -32,7 +32,7 @@ export function NotesProvider({ children }: NotesProviderProps) {
     return [];
   });
   const [isEmpty, setIsEmpty] = useState(() => {
-    if (notes) {
+    if (notes.length > 0) {
       return false;
     } else {
       return true;
